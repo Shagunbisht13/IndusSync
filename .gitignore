@@ -1,0 +1,11 @@
+# Environments
+venv/
+.env
+
+# Cache
+__pycache__/
+*.pyc
+
+# Data (Optional to exclude, but standard practice)
+# We will leave it uncommented so CSVs get committed for the hackathon
+# *.csv
