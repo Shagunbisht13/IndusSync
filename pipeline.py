@@ -43,7 +43,31 @@ class ProductEnrichment(BaseModel):
     attr_3_value: str = Field(description="Attribute 3 Value")
     attr_3_uom: Optional[str] = Field(description="Attribute 3 UOM")
 
-def enrich_product(row, client):
+def enrich_product(row, client, is_demo=False):
+    if is_demo:
+        import time
+        time.sleep(1.5)
+        return {
+            "manufacture_name": "Whirlpool Corporation",
+            "brand_name": "Whirlpool",
+            "classpath": "Appliances & Consumer Electronics>Kitchen Appliances>Built-In Dishwashers",
+            "invoice_desc": "DISHWASHER BLTLN SST SST 120V 10A 41DBA",
+            "mobile_desc": "Whirlpool, Dishwasher, Eco Series, WDTS7024RZ",
+            "short_desc": "Whirlpool Eco Series WDTS7024RZ Dishwasher, Built-in Mounting, Stainless Steel",
+            "long_desc": "Whirlpool Dishwasher, Eco Series, 120 V, 10 A, Built-in Mounting, 33-7/16 in H x 23-7/8 in W x 22-5/8 in D...",
+            "retail_desc": "Eco Series Dishwasher, Built-in Mounting, Stainless Steel",
+            "marketing_desc": "Load more and run less with our quietest and largest capacity dishwasher.",
+            "attr_1_label": "Voltage Rating",
+            "attr_1_value": "120",
+            "attr_1_uom": "V",
+            "attr_2_label": "Amperage Rating",
+            "attr_2_value": "10",
+            "attr_2_uom": "A",
+            "attr_3_label": "Sound Level",
+            "attr_3_value": "41",
+            "attr_3_uom": "dBA"
+        }
+        
     prompt = f"""
     You are an expert product data enrichment assistant for industrial distributors.
     Given the following raw product data, generate the structured output following Unilog guidelines.
@@ -62,7 +86,7 @@ def enrich_product(row, client):
     """
     
     response = client.models.generate_content(
-        model='gemini-2.5-flash',
+        model='gemini-3.6-flash',
         contents=prompt,
         config=types.GenerateContentConfig(
             response_mime_type="application/json",

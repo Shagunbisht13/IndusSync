@@ -4,9 +4,9 @@ import os
 from pipeline import enrich_product, ProductEnrichment
 from google import genai
 
-st.set_page_config(page_title="UniHack Product Intelligence", layout="wide")
+st.set_page_config(page_title="IndusSync", layout="wide")
 
-st.title("AI-Powered Industrial Product Intelligence")
+st.title("IndusSync: AI-Powered Industrial Product Intelligence")
 st.markdown("Transform fragmented product inputs into structured, commerce-ready information.")
 
 # Sidebar for config
@@ -39,16 +39,17 @@ else:
     st.json(selected_row.to_dict())
     
     if st.button("Run Enrichment"):
-        if not api_key:
+        is_demo = (api_key.lower() == "demo")
+        if not api_key and not is_demo:
             st.error("Please enter your Gemini API Key in the sidebar.")
         else:
             with st.spinner("Enriching product using Gemini..."):
                 try:
                     # Setup client
-                    client = genai.Client(api_key=api_key)
+                    client = genai.Client(api_key=api_key) if not is_demo else None
                     
                     # Run logic
-                    result = enrich_product(selected_row, client)
+                    result = enrich_product(selected_row, client, is_demo=is_demo)
                     
                     st.success("Enrichment Complete!")
                     

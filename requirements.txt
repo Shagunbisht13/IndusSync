@@ -3,3 +3,6 @@ numpy
 python-dotenv
 google-genai
 streamlit
+
+fastapi
+uvicorn
