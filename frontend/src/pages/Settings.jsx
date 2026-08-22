@@ -62,7 +62,7 @@ export default function Settings() {
             <div className="flex items-center justify-between">
               <div>
                 <h4 className="font-medium text-sm">Auto-Accept High Confidence</h4>
-                <p className="text-xs text-[var(--text-secondary)]">Automatically mark items ready if AI confidence > 95%</p>
+                <p className="text-xs text-[var(--text-secondary)]">Automatically mark items ready if AI confidence &gt; 95%</p>
               </div>
               <div className="w-12 h-6 bg-[var(--accent)] rounded-full relative cursor-pointer">
                 <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
