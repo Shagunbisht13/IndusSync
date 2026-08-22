@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { mockData } from '../data/mockData';
+import useAppStore from '../store/useAppStore';
 import { Search, Filter, ChevronLeft, ChevronRight, CheckCircle, AlertTriangle, Zap, X } from 'lucide-react';
 import ItemDrawer from '../components/ItemDrawer';
+import toast from 'react-hot-toast';
 
 export default function Catalog() {
+  const { parts, updatePartStatus } = useAppStore(state => ({ parts: state.parts, updatePartStatus: state.updatePartStatus }));
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedItem, setSelectedItem] = useState(null);
   const itemsPerPage = 10;
 
-  const filteredData = mockData.filter(item => 
+  const filteredData = parts.filter(item => 
     item.Mfg_Part_Num.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.Part_Desc.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.Part_Manuf.toLowerCase().includes(searchTerm.toLowerCase())
@@ -30,6 +32,21 @@ export default function Catalog() {
       default:
         return <span className="badge">{status}</span>;
     }
+  };
+
+  const handleFixWithAI = (e, item) => {
+    e.stopPropagation();
+    toast.promise(
+      new Promise(resolve => setTimeout(resolve, 1500)),
+      {
+        loading: 'Running AI enrichment...',
+        success: () => {
+          updatePartStatus(item.id, 'fixed_by_ai');
+          return `Successfully enriched ${item.Mfg_Part_Num}`;
+        },
+        error: 'Failed to enrich data.',
+      }
+    );
   };
 
   return (
@@ -62,6 +79,7 @@ export default function Catalog() {
                 <th>Description</th>
                 <th>Manufacturer</th>
                 <th>Errors</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -82,11 +100,21 @@ export default function Catalog() {
                       </span>
                     )}
                   </td>
+                  <td>
+                    {item.status === 'needs_fixing' && (
+                      <button 
+                        onClick={(e) => handleFixWithAI(e, item)}
+                        className="btn-secondary text-xs py-1 px-2 flex items-center gap-1 border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white transition-colors"
+                      >
+                        <Zap size={12} /> Fix
+                      </button>
+                    )}
+                  </td>
                 </tr>
               ))}
               {currentItems.length === 0 && (
                 <tr>
-                  <td colSpan="5" className="text-center py-12 text-[var(--text-secondary)]">
+                  <td colSpan="6" className="text-center py-12 text-[var(--text-secondary)]">
                     No parts found matching "{searchTerm}"
                   </td>
                 </tr>

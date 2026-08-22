@@ -1,8 +1,19 @@
 import React from 'react';
-import { X, Sparkles, Check, AlertTriangle, ChevronRight } from 'lucide-react';
+import { X, Sparkles, Check, AlertTriangle, ChevronRight, QrCode } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
+import useAppStore from '../store/useAppStore';
+import toast from 'react-hot-toast';
 
 export default function ItemDrawer({ item, onClose }) {
+  const acceptAIFix = useAppStore(state => state.acceptAIFix);
+
   if (!item) return null;
+
+  const handleAccept = () => {
+    acceptAIFix(item.id);
+    toast.success(`AI Enrichment accepted for ${item.Mfg_Part_Num}`);
+    onClose();
+  };
 
   return (
     <>
@@ -29,6 +40,21 @@ export default function ItemDrawer({ item, onClose }) {
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-6 space-y-8">
           
+          {/* Quick Actions & QR */}
+          <div className="flex gap-6">
+            <div className="p-3 bg-white border border-[var(--border-color)] rounded-xl shadow-sm inline-flex">
+              <QRCodeSVG value={JSON.stringify({ sku: item.Mfg_Part_Num, mfg: item.Part_Manuf })} size={80} />
+            </div>
+            <div className="flex-1 flex flex-col justify-center">
+               <h3 className="text-sm font-bold text-[var(--text-primary)] mb-1">Part 360 View</h3>
+               <p className="text-xs text-[var(--text-secondary)] mb-3">Scan QR code for mobile inventory lookup.</p>
+               <div className="flex gap-2">
+                 <button className="text-xs btn-secondary py-1 px-3">View Supplier</button>
+                 <button className="text-xs btn-secondary py-1 px-3">Stock History</button>
+               </div>
+            </div>
+          </div>
+
           {/* Raw Input Section */}
           <section>
             <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-secondary)] mb-4">Raw Input Data</h3>
@@ -118,7 +144,7 @@ export default function ItemDrawer({ item, onClose }) {
         <div className="p-6 border-t border-[var(--border-color)] bg-[var(--bg-hover)] flex justify-end gap-3">
           <button className="btn-secondary" onClick={onClose}>Cancel</button>
           {item.status === 'fixed_by_ai' && (
-            <button className="btn-primary bg-green-600 hover:bg-green-700 shadow-green-600/20">
+            <button onClick={handleAccept} className="btn-primary bg-green-600 hover:bg-green-700 shadow-green-600/20">
               <Check size={16} /> Accept & Mark Ready
             </button>
           )}

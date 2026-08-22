@@ -42,6 +42,15 @@ const useAppStore = create(
         
         return { parts: updatedParts };
       }),
+      
+      addParts: (newParts) => set((state) => {
+        get().addAuditLog({
+          type: 'manual',
+          action: `Bulk imported ${newParts.length} parts`,
+          user: state.user?.name || 'Admin',
+        });
+        return { parts: [...newParts, ...state.parts] };
+      }),
 
       // --- Audit Log State ---
       auditLogs: [
