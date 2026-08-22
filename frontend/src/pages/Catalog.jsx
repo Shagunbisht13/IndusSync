@@ -5,7 +5,8 @@ import ItemDrawer from '../components/ItemDrawer';
 import toast from 'react-hot-toast';
 
 export default function Catalog() {
-  const { parts, updatePartStatus } = useAppStore(state => ({ parts: state.parts, updatePartStatus: state.updatePartStatus }));
+  const parts = useAppStore(state => state.parts);
+  const updatePartStatus = useAppStore(state => state.updatePartStatus);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedItem, setSelectedItem] = useState(null);

@@ -6,7 +6,8 @@ import useAppStore from '../store/useAppStore';
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout } = useAppStore(state => ({ user: state.user, logout: state.logout }));
+  const user = useAppStore(state => state.user);
+  const logout = useAppStore(state => state.logout);
   
   const getPageTitle = () => {
     switch (location.pathname) {
