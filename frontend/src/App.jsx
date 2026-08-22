@@ -11,6 +11,10 @@ import Import from './pages/Import';
 import Suppliers from './pages/Suppliers';
 import AuditLog from './pages/AuditLog';
 import Settings from './pages/Settings';
+import Inventory from './pages/Inventory';
+import PurchaseOrders from './pages/PurchaseOrders';
+import Analytics from './pages/Analytics';
+import Integrations from './pages/Integrations';
 
 const ProtectedRoute = ({ children }) => {
   const user = useAppStore(state => state.user);
@@ -30,7 +34,11 @@ export default function App() {
             <Route index element={<Dashboard />} />
             <Route path="catalog" element={<Catalog />} />
             <Route path="import" element={<Import />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="pos" element={<PurchaseOrders />} />
             <Route path="suppliers" element={<Suppliers />} />
+            <Route path="integrations" element={<Integrations />} />
+            <Route path="analytics" element={<Analytics />} />
             <Route path="audit" element={<AuditLog />} />
             <Route path="settings" element={<Settings />} />
             <Route path="*" element={<Navigate to="/" replace />} />
