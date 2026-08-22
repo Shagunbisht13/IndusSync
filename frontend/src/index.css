@@ -4,9 +4,9 @@
 @tailwind utilities;
 
 :root {
-  --bg-main: #f0f4f8;
+  --bg-main: #f8fafc;
   --bg-panel: #ffffff;
-  --bg-hover: #f8fafc;
+  --bg-hover: #f1f5f9;
   --border-color: #e2e8f0;
   --text-primary: #0f172a;
   --text-secondary: #64748b;
@@ -16,17 +16,18 @@
   --accent-hover: #1d4ed8;
   --accent-light: #eff6ff;
   
-  --success: #10b981;
+  --success: #059669;
   --success-bg: #d1fae5;
-  --error: #ef4444;
+  --error: #dc2626;
   --error-bg: #fee2e2;
-  --warning: #f59e0b;
+  --warning: #d97706;
   --warning-bg: #fef3c7;
   
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
-  --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.2);
+  --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.15);
+  --shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
 * {
