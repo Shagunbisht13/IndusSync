@@ -78,7 +78,11 @@ export default function Login() {
           </div>
           
           <h2 className="text-3xl font-bold text-[var(--text-primary)] mb-2">Welcome back</h2>
-          <p className="text-[var(--text-secondary)] mb-8">Please enter your details to sign in to your workspace.</p>
+          <p className="text-[var(--text-secondary)] mb-4">Please enter your details to sign in to your workspace.</p>
+          <div className="bg-blue-50 text-blue-800 text-sm p-3 rounded-lg border border-blue-200 mb-8 flex items-start gap-2">
+            <span className="font-semibold shrink-0">Note:</span>
+            <span>This is a prototype. You can log in with any email and password (min 6 characters) for now.</span>
+          </div>
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div>
